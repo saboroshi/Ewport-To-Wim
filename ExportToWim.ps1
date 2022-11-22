@@ -4,17 +4,17 @@ function ButtonWorkFolder-Click
     $OpenFileDialog.ShowDialog()
     $TextBoxSourceImageFile.Text = $OpenFileDialog.FileName
     $SourceImagePath = $TextBoxSourceImageFile.Text
-	$Data = Get-WindowsImage -ImagePath "$SourceImagePath"
-	$OutputList = New-Object System.Collections.ArrayList
-	$OutputList.AddRange(@($Data | Select-Object ImageName, ImageIndex))
-	$DataGridView.AutoSizeColumnsMode = 'Fill'
-	$DataGridView.DataSource = $OutputList
+    $Data = Get-WindowsImage -ImagePath "$SourceImagePath"
+    $OutputList = New-Object System.Collections.ArrayList
+    $OutputList.AddRange(@($Data | Select-Object ImageName, ImageIndex))
+    $DataGridView.AutoSizeColumnsMode = 'Fill'
+    $DataGridView.DataSource = $OutputList
 }
 
 function DataGridView-RowHeaderMouseClick
 {
     $TextBoxSelectedImageName.Text = $datagridview.SelectedCells.Item(0).Value
-	$TextBoxSelectedImageIndex.Text = $datagridview.SelectedCells.Item(1).Value
+    $TextBoxSelectedImageIndex.Text = $datagridview.SelectedCells.Item(1).Value
 }
 
 function ButtonDestinationImagePath-Click
@@ -36,15 +36,15 @@ function ComboBoxCompression-Click
 function ButtonExport-Click
 {
     $SourceImageFile = $TextBoxSourceImageFile.Text
-	$SourceIndex = $TextBoxSelectedImageIndex.Text
-	$DestImagePath = $TextBoxDestinationImagePath.Text
-	$DestinationName = $TextBoxSelectedImageName.Text
-	$Compression = $ComboBoxCompression.Text
+    $SourceIndex = $TextBoxSelectedImageIndex.Text
+    $DestImagePath = $TextBoxDestinationImagePath.Text
+    $DestinationName = $TextBoxSelectedImageName.Text
+    $Compression = $ComboBoxCompression.Text
     $Form.Enabled = $false
     [void] [System.Windows.MessageBox]::Show('This operation may take several minutes. When the operation is finished, the program interface becomes active again.','Information','OK')
     Export-WindowsImage -SourceImagePath "$SourceImageFile" -SourceIndex "$SourceIndex" `
-						          -DestinationImagePath "$DestImagePath" -DestinationName "$DestinationName" `
-						          -CompressionType "$Compression"
+			-DestinationImagePath "$DestImagePath" -DestinationName "$DestinationName" `
+			-CompressionType "$Compression"		
     $Form.Enabled = $true
 }
 
